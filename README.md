@@ -1,2 +1,3 @@
-# fastapi-react-kanban
+# Kanban Board
+
 Kanban board made with FastAPI and React JS
