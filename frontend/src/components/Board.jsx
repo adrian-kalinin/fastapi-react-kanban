@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import Column from './Column';
 
 
 const Container = styled.div`
@@ -17,12 +18,18 @@ function Board(props) {
   async function fetchBoard() {
     const response = await fetch('/board');
     const data = await response.json();
-    return data.board;
+    return data['board'];
   }
 
   return (
     <Container>
-      Board
+      {
+        board.columnOrder.map((columnId, index) => {
+          const column = board.columns[columnId];
+          const tasks = column.taskIds.map(taskId => board.tasks[taskId]);
+          return <Column key={column.id} column={column} tasks={tasks} index={index} />;
+        })
+      }
     </Container>
   );
 }
