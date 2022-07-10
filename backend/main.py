@@ -26,4 +26,4 @@ def board():
         "columnOrder": ["column-1", "column-2"],
     }
 
-    return board_data
+    return {"board": board_data}
