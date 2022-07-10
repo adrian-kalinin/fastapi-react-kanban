@@ -15,12 +15,12 @@ def board():
             "column-1": {
                 "id": "column-1",
                 "title": "To Do",
-                "tasks": ["task-2", "task-3"],
+                "taskIds": ["task-2", "task-3"],
             },
             "column-2": {
                 "id": "column-2",
                 "title": "Done",
-                "tasks": ["task-1"],
+                "taskIds": ["task-1"],
             },
         },
         "columnOrder": ["column-1", "column-2"],
