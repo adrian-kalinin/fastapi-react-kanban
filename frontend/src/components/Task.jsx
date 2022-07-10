@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Draggable } from 'react-beautiful-dnd';
 
 
 const Container = styled.div`
@@ -11,9 +12,13 @@ const Container = styled.div`
 
 function Task(props) {
   return (
-    <Container>
-      {props.task.content}
-    </Container>
+    <Draggable draggableId={props.task.id} index={props.index}>
+      { provided => (
+        <Container {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+          {props.task.content}
+        </Container>
+      )}
+    </Draggable>
   );
 }
 
