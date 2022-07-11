@@ -12,12 +12,15 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 10px;
   background-color: white;
 `;
 
 const Title = styled.h3`
-  padding: 5px;
+  margin: 10px 10px 5px 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid black;
+  width: 100%;
+  text-align: center;
 `
 
 const TaskList = styled.div`

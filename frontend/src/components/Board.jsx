@@ -6,6 +6,8 @@ import Column from './Column';
 
 const Container = styled.div`
   display: flex;
+  justify-content: center;
+  margin: 10px;
 `;
 
 function Board(props) {
