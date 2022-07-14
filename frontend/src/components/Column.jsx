@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import Task from './Task';
+import AddTask from './AddTask';
 
 
 const Container = styled.div`
@@ -26,7 +27,6 @@ const Title = styled.h3`
 const TaskList = styled.div`
   width: 100%;
   height: 100%;
-  padding-bottom: 6px
 `
 
 function Column(props) {
@@ -47,6 +47,7 @@ function Column(props) {
             </TaskList>
             )}
           </Droppable>
+          <AddTask board={props.board} setBoard={props.setBoard} columnId={props.column.id} />
         </Container>
       )}
     </Draggable>
