@@ -57,14 +57,14 @@ function Column(props) {
         <Container {...provided.draggableProps} ref={provided.innerRef}>
           <Title {...provided.dragHandleProps}>
             {props.column.title}
-            <span onClick={() => deleteColumn(props.column.id, props.index)}> [X]</span>
+            <span onClick={() => deleteColumn(props.column.id, props.index)}> [x]</span>
           </Title>
           <Droppable droppableId={props.column.id} direction="vertical" type="task">
             { provided => (
               <TaskList {...provided.droppableProps} ref={provided.innerRef}>
                 {
                   props.tasks.map((task, index) =>
-                    <Task key={task.id} task={task} columnId={props.column.id} index={index} />
+                    <Task key={task.id} task={task} columnId={props.column.id} index={index} board={props.board} setBoard={props.setBoard} />
                   )
                 }
                 {provided.placeholder}
