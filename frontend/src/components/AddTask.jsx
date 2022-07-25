@@ -1,14 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 
-
-const Container = styled.div`
-  margin: 10px 10px 5px 10px;
-  padding: 5px 0;
-  border-top: 1px solid black;
-  width: 100%;
-  text-align: center;
-`
 
 function AddTask(props) {
   const [showNewTaskButton, setShowNewTaskButton] = useState(true);
@@ -52,14 +43,14 @@ function AddTask(props) {
   }
 
   return (
-    <Container>
+    <div>
       {
         showNewTaskButton ?
           <button onClick={() => setShowNewTaskButton(false)}>New task</button>
           :
           <input type="text" value={value} onChange={(event => setValue(event.target.value))} onKeyDown={handleInputComplete} />
       }
-    </Container>
+    </div>
   )
 }
 

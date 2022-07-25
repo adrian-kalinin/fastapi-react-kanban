@@ -1,11 +1,4 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-
-const Container = styled.div`
-  margin: 10px;
-  padding: 5px 0;
-  text-align: center;
-`
 
 function AddColumn(props) {
   const [showNewColumnButton, setShowNewColumnButton] = useState(true);
@@ -43,14 +36,14 @@ function AddColumn(props) {
   }
 
   return (
-    <Container>
+    <div>
       {
         showNewColumnButton ?
           <button onClick={() => setShowNewColumnButton(false)}>New column</button>
           :
           <input type="text" value={value} onChange={(event => setValue(event.target.value))} onKeyDown={handleInputComplete} />
       }
-    </Container>
+    </div>
   );
 }
 

@@ -1,16 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
 
-
-const Container = styled.div`
-  border: 1px solid black;
-  border-radius: 2px;
-  padding: 8px;
-  margin: 10px auto;
-  max-width: 75%;
-  background-color: white;
-`;
 
 function Task(props) {
   function deleteTask(columnId, index, taskId) {
@@ -37,10 +27,14 @@ function Task(props) {
   return (
     <Draggable draggableId={props.task.id} index={props.index}>
       { provided => (
-        <Container {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-          {props.task.content}
-          <span onClick={() => deleteTask(props.columnId, props.index, props.task.id)}> [x]</span>
-        </Container>
+        <div className="bg-white shadow rounded mt-4 px-3 pt-3 pb-5 border border-gray" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+          <div className="flex justify-between">
+            <p className="text-gray-700 font-semibold font-sans tracking-wide text-sm">{props.task.content}</p>
+          </div>
+          <div className="flex mt-4 justify-between items-center">
+            <span className="text-sm text-gray-600" onClick={() => deleteTask(props.columnId, props.index, props.task.id)}>Delete</span>
+          </div>
+        </div>
       )}
     </Draggable>
   );

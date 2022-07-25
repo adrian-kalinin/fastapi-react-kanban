@@ -1,16 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import styled from 'styled-components';
 import Column from './Column';
 import AddColumn from './AddColumn';
-import AddTask from './AddTask';
 
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 10px;
-`;
 
 function Board(props) {
   const initialData = {tasks: {}, columns: {}, columnOrder: []};
@@ -101,10 +93,9 @@ function Board(props) {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <AddColumn board={board} setBoard={setBoard} />
       <Droppable droppableId="all-columns" direction="horizontal" type="column">
         { provided => (
-          <Container {...provided.droppableProps} ref={provided.innerRef}>
+          <div className="flex justify-center mt-4" {...provided.droppableProps} ref={provided.innerRef}>
             {
               board.columnOrder.map((columnId, index) => {
                 const column = board.columns[columnId];
@@ -113,7 +104,7 @@ function Board(props) {
               })
             }
             {provided.placeholder}
-          </Container>
+          </div>
         )}
       </Droppable>
     </DragDropContext>
