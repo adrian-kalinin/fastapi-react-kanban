@@ -42,6 +42,7 @@ function Column(props) {
                     <Task key={task.id} task={task} columnId={props.column.id} index={index} board={props.board} setBoard={props.setBoard} />
                   )
                 }
+                <AddTask board={props.board} setBoard={props.setBoard} columnId={props.column.id} />
                 {provided.placeholder}
             </div>
             )}

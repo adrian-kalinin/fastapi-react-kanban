@@ -43,7 +43,7 @@ function AddTask(props) {
   }
 
   return (
-    <div>
+    <div className="bg-white shadow rounded mt-4 px-3 py-3 border border-white text-sm text-gray-600">
       {
         showNewTaskButton ?
           <button onClick={() => setShowNewTaskButton(false)}>New task</button>

@@ -92,22 +92,25 @@ function Board(props) {
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="all-columns" direction="horizontal" type="column">
-        { provided => (
-          <div className="flex justify-center mt-4" {...provided.droppableProps} ref={provided.innerRef}>
-            {
-              board.columnOrder.map((columnId, index) => {
-                const column = board.columns[columnId];
-                const tasks = column.taskIds.map(taskId => board.tasks[taskId]);
-                return <Column key={column.id} column={column} tasks={tasks} index={index} board={board} setBoard={setBoard} />;
-              })
-            }
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <>
+      <AddColumn board={board} setBoard={setBoard} />
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="all-columns" direction="horizontal" type="column">
+          { provided => (
+            <div className="flex justify-center mt-4" {...provided.droppableProps} ref={provided.innerRef}>
+              {
+                board.columnOrder.map((columnId, index) => {
+                  const column = board.columns[columnId];
+                  const tasks = column.taskIds.map(taskId => board.tasks[taskId]);
+                  return <Column key={column.id} column={column} tasks={tasks} index={index} board={board} setBoard={setBoard} />;
+                })
+              }
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </>
   );
 }
 

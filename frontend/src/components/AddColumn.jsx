@@ -36,13 +36,15 @@ function AddColumn(props) {
   }
 
   return (
-    <div>
-      {
-        showNewColumnButton ?
-          <button onClick={() => setShowNewColumnButton(false)}>New column</button>
-          :
-          <input type="text" value={value} onChange={(event => setValue(event.target.value))} onKeyDown={handleInputComplete} />
-      }
+    <div className="flex justify-center">
+      <div className="bg-gray-100 rounded mt-4 px-5 py-3 border border-gray text-gray-700 font-semibold tracking-wide text-sm">
+        {
+          showNewColumnButton ?
+            <button onClick={() => setShowNewColumnButton(false)}>New column</button>
+            :
+            <input type="text" value={value} onChange={(event => setValue(event.target.value))} onKeyDown={handleInputComplete} />
+        }
+      </div>
     </div>
   );
 }
