@@ -31,7 +31,7 @@ function Column(props) {
       { provided => (
         <div className="bg-gray-100 rounded-lg px-3 py-3 column-width rounded mx-2" {...provided.draggableProps} ref={provided.innerRef}>
           <div className="flex justify-between tracking-wide text-sm" {...provided.dragHandleProps}>
-            <span className="text-gray-700 font-semibold">{props.column.title}</span>
+            <span className="text-gray-700 font-semibold">{props.column.title} ({props.tasks.length})</span>
             <span className="text-gray-600" onClick={() => deleteColumn(props.column.id, props.index)}> Delete</span>
           </div>
           <Droppable droppableId={props.column.id} direction="vertical" type="task">
