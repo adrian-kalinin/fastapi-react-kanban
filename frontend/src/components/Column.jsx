@@ -34,19 +34,22 @@ function Column(props) {
             <span className="text-gray-700 font-semibold">{props.column.title} ({props.tasks.length})</span>
             <span className="text-gray-600" onClick={() => deleteColumn(props.column.id, props.index)}>Delete</span>
           </div>
-          <Droppable droppableId={props.column.id} direction="vertical" type="task">
-            { provided => (
-              <div className="h-full" {...provided.droppableProps} ref={provided.innerRef}>
-                {
-                  props.tasks.map((task, index) =>
-                    <Task key={task.id} task={task} columnId={props.column.id} index={index} board={props.board} setBoard={props.setBoard} />
-                  )
-                }
-                <AddTask board={props.board} setBoard={props.setBoard} columnId={props.column.id} />
-                {provided.placeholder}
-            </div>
-            )}
-          </Droppable>
+          <div className="h-full">
+            <Droppable droppableId={props.column.id} direction="vertical" type="task">
+              { provided => (
+                <div {...provided.droppableProps} ref={provided.innerRef}>
+                  {
+                    props.tasks.map((task, index) =>
+                      <Task key={task.id} task={task} columnId={props.column.id} index={index} board={props.board} setBoard={props.setBoard} />
+                    )
+                  }
+
+                  {provided.placeholder}
+              </div>
+              )}
+            </Droppable>
+            <AddTask board={props.board} setBoard={props.setBoard} columnId={props.column.id} />
+          </div>
         </div>
       )}
     </Draggable>
