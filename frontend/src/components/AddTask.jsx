@@ -6,7 +6,7 @@ function AddTask(props) {
   const [value, setValue] = useState("");
 
   function handleInputComplete(event) {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && event.target.value !== "") {
       addNewTask(event.target.value, props.columnId);
 
       setShowNewTaskButton(true);
