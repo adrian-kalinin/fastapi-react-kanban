@@ -93,11 +93,18 @@ function Board(props) {
 
   return (
     <>
-      <AddColumn board={board} setBoard={setBoard} />
+      <div className="container mx-auto flex justify-between my-5">
+        <div className="flex items-center">
+          <h5 className="text-gray-700 font-semibold">My board</h5>
+        </div>
+        <div className="flex justify-center">
+          <AddColumn board={board} setBoard={setBoard} />
+        </div>
+      </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="all-columns" direction="horizontal" type="column">
           { provided => (
-            <div className="flex justify-center mt-4" {...provided.droppableProps} ref={provided.innerRef}>
+            <div className="flex justify-center" {...provided.droppableProps} ref={provided.innerRef}>
               {
                 board.columnOrder.map((columnId, index) => {
                   const column = board.columns[columnId];
