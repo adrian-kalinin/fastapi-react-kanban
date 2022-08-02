@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+
+
+const useFocus = () => {
+	const htmlElRef = useRef(null);
+	const setFocus = () => {htmlElRef.current && htmlElRef.current.focus()};
+
+	return [htmlElRef,  setFocus];
+}
 
 
 function AddTask(props) {
   const [showNewTaskButton, setShowNewTaskButton] = useState(true);
   const [value, setValue] = useState("");
+  const [inputRef, setInputFocus] = useFocus();
 
   function handleInputComplete(event) {
     if (event.key === "Enter" && event.target.value !== "") {
@@ -46,9 +55,9 @@ function AddTask(props) {
     <div className="mt-3 px-2 py-1 text-sm text-gray-600">
       {
         showNewTaskButton ?
-          <button onClick={() => setShowNewTaskButton(false)}>New task</button>
+          <button onClick={() => setShowNewTaskButton(false) && setInputFocus()}>New task</button>
           :
-          <input type="text" value={value} onChange={(event => setValue(event.target.value))} onKeyDown={handleInputComplete} />
+          <input autoFocus type="text" value={value} onChange={(event => setValue(event.target.value))} onKeyDown={handleInputComplete} onBlur={() => setShowNewTaskButton(true)} />
       }
     </div>
   )

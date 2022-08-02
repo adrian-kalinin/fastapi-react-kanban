@@ -1,8 +1,18 @@
-import React, { useState } from 'react';
+import React, {useRef, useState} from 'react';
+
+
+const useFocus = () => {
+	const htmlElRef = useRef(null);
+	const setFocus = () => {htmlElRef.current && htmlElRef.current.focus()};
+
+	return [htmlElRef,  setFocus];
+}
+
 
 function AddColumn(props) {
   const [showNewColumnButton, setShowNewColumnButton] = useState(true);
   const [value, setValue] = useState("");
+  const [inputRef, setInputFocus] = useFocus();
 
   function handleInputComplete(event) {
     if (event.key === "Enter") {
@@ -39,9 +49,9 @@ function AddColumn(props) {
     <div className="text-sm text-gray-600">
       {
         showNewColumnButton ?
-          <button onClick={() => setShowNewColumnButton(false)}>New column</button>
+          <button onClick={() => setShowNewColumnButton(false) && setInputFocus()}>New column</button>
           :
-          <input type="text" value={value} onChange={(event => setValue(event.target.value))} onKeyDown={handleInputComplete} />
+          <input autoFocus type="text" value={value} onChange={(event => setValue(event.target.value))} onKeyDown={handleInputComplete} onBlur={() => setShowNewColumnButton(true)} />
       }
     </div>
   );
