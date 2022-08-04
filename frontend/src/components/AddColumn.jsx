@@ -51,7 +51,7 @@ function AddColumn(props) {
         showNewColumnButton ?
           <button onClick={() => setShowNewColumnButton(false) && setInputFocus()}>New column</button>
           :
-          <input autoFocus type="text" value={value} onChange={(event => setValue(event.target.value))} onKeyDown={handleInputComplete} onBlur={() => setShowNewColumnButton(true)} />
+          <input autoFocus type="text" className="border rounded-md px-2 py-1 outline-none focus:outline-none" value={value} onChange={(event => setValue(event.target.value))} onKeyDown={handleInputComplete} onBlur={() => setShowNewColumnButton(true)} />
       }
     </div>
   );

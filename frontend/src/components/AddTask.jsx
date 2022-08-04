@@ -52,12 +52,12 @@ function AddTask(props) {
   }
 
   return (
-    <div className="mt-3 px-2 py-1 text-sm text-gray-600">
+    <div className="mt-3 text-sm text-gray-600">
       {
         showNewTaskButton ?
-          <button onClick={() => setShowNewTaskButton(false) && setInputFocus()}>New task</button>
+          <button className="px-2 py-1" onClick={() => setShowNewTaskButton(false) && setInputFocus()}>New task</button>
           :
-          <input autoFocus type="text" value={value} onChange={(event => setValue(event.target.value))} onKeyDown={handleInputComplete} onBlur={() => setShowNewTaskButton(true)} />
+          <input autoFocus type="text" className="bg-white shadow border border-white rounded px-2 py-1 outline-none focus:outline-none" value={value} onChange={(event => setValue(event.target.value))} onKeyDown={handleInputComplete} onBlur={() => setShowNewTaskButton(true)} />
       }
     </div>
   )
