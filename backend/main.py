@@ -1,6 +1,33 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
+
 
 app = FastAPI()
+
+
+class Task(BaseModel):
+    id: str
+    content: str
+
+
+class Tasks(BaseModel):
+    __root__: dict[str, Task]
+
+
+class Column(BaseModel):
+    id: str
+    title: str
+    taskIds: list[str]
+
+
+class Columns(BaseModel):
+    __root__: dict[str, Column]
+
+
+class Board(BaseModel):
+    tasks: Tasks
+    columns: Columns
+    columnOrder: list[str]
 
 
 @app.get("/board")
