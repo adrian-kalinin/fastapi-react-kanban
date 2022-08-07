@@ -1,7 +1,6 @@
-import React from 'react';
-import Board from './Board';
-import Navbar from './Navbar';
-
+import React from "react";
+import Board from "./Board";
+import Navbar from "./Navbar";
 
 function App() {
   return (

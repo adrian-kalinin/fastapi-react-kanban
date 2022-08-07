@@ -1,13 +1,13 @@
-import React, { useState, useRef } from 'react';
-
+import React, { useState, useRef } from "react";
 
 const useFocus = () => {
-	const htmlElRef = useRef(null);
-	const setFocus = () => {htmlElRef.current && htmlElRef.current.focus()};
+  const htmlElRef = useRef(null);
+  const setFocus = () => {
+    htmlElRef.current && htmlElRef.current.focus();
+  };
 
-	return [htmlElRef,  setFocus];
-}
-
+  return [htmlElRef, setFocus];
+};
 
 function AddTask(props) {
   const [showNewTaskButton, setShowNewTaskButton] = useState(true);
@@ -32,35 +32,47 @@ function AddTask(props) {
 
     const newTask = {
       id: newTaskId,
-      content: content
+      content: content,
     };
 
     props.setBoard({
       ...props.board,
       tasks: {
         ...props.board.tasks,
-        [newTaskId]: newTask
+        [newTaskId]: newTask,
       },
       columns: {
         ...props.board.columns,
         [column.id]: {
           ...column,
-          taskIds: newTaskIds
-        }
-      }
+          taskIds: newTaskIds,
+        },
+      },
     });
   }
 
   return (
     <div className="mt-3 text-sm text-gray-600">
-      {
-        showNewTaskButton ?
-          <button className="px-2 py-1" onClick={() => setShowNewTaskButton(false) && setInputFocus()}>New task</button>
-          :
-          <input autoFocus type="text" className="bg-white shadow border border-white rounded px-2 py-1 outline-none focus:outline-none" value={value} onChange={(event => setValue(event.target.value))} onKeyDown={handleInputComplete} onBlur={() => setShowNewTaskButton(true)} />
-      }
+      {showNewTaskButton ? (
+        <button
+          className="px-2 py-1"
+          onClick={() => setShowNewTaskButton(false) && setInputFocus()}
+        >
+          New task
+        </button>
+      ) : (
+        <input
+          autoFocus
+          type="text"
+          className="bg-white shadow border border-white rounded px-2 py-1 outline-none focus:outline-none"
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+          onKeyDown={handleInputComplete}
+          onBlur={() => setShowNewTaskButton(true)}
+        />
+      )}
     </div>
-  )
+  );
 }
 
 export default AddTask;

@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import Column from './Column';
-import AddColumn from './AddColumn';
+import React, { useState, useEffect } from "react";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
+import Column from "./Column";
+import AddColumn from "./AddColumn";
 
 function Board(props) {
-  const initialData = {tasks: {}, columns: {}, columnOrder: []};
+  const initialData = { tasks: {}, columns: {}, columnOrder: [] };
   const [board, setBoard] = useState(initialData);
 
   useEffect(() => {
-    fetchBoard().then(data => setBoard(data));
+    fetchBoard().then((data) => setBoard(data));
   }, []);
 
   async function fetchBoard() {
-    const response = await fetch('/board');
+    const response = await fetch("/board");
     const data = await response.json();
-    return data['board'];
+    return data["board"];
   }
 
   function onDragEnd(result) {
@@ -25,18 +25,21 @@ function Board(props) {
       return;
     }
 
-    if (destination.droppableId === source.droppableId && destination.indent === source.index) {
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.indent === source.index
+    ) {
       return;
     }
 
-    if (type === 'column') {
+    if (type === "column") {
       const newColumnOrder = Array.from(board.columnOrder);
       newColumnOrder.splice(source.index, 1);
       newColumnOrder.splice(destination.index, 0, draggableId);
 
       setBoard({
         ...board,
-        columnOrder: newColumnOrder
+        columnOrder: newColumnOrder,
       });
     }
 
@@ -51,17 +54,16 @@ function Board(props) {
 
         const newColumn = {
           ...startColumn,
-          taskIds: newTaskIds
-        }
+          taskIds: newTaskIds,
+        };
 
         setBoard({
           ...board,
           columns: {
             ...board.columns,
-            [newColumn.id]: newColumn
-          }
+            [newColumn.id]: newColumn,
+          },
         });
-
       } else {
         const newStartTaskIds = Array.from(startColumn.taskIds);
         const newFinishTaskIds = Array.from(finishColumn.taskIds);
@@ -71,22 +73,22 @@ function Board(props) {
 
         const newStartColumn = {
           ...startColumn,
-          taskIds: newStartTaskIds
-        }
+          taskIds: newStartTaskIds,
+        };
 
         const newFinishColumn = {
           ...finishColumn,
-          taskIds: newFinishTaskIds
-        }
+          taskIds: newFinishTaskIds,
+        };
 
         setBoard({
           ...board,
           columns: {
             ...board.columns,
             [newStartColumn.id]: newStartColumn,
-            [newFinishColumn.id]: newFinishColumn
-          }
-        })
+            [newFinishColumn.id]: newFinishColumn,
+          },
+        });
       }
     }
   }
@@ -102,16 +104,33 @@ function Board(props) {
         </div>
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="all-columns" direction="horizontal" type="column">
-          { provided => (
-            <div className="flex justify-center" {...provided.droppableProps} ref={provided.innerRef}>
-              {
-                board.columnOrder.map((columnId, index) => {
-                  const column = board.columns[columnId];
-                  const tasks = column.taskIds.map(taskId => board.tasks[taskId]);
-                  return <Column key={column.id} column={column} tasks={tasks} index={index} board={board} setBoard={setBoard} />;
-                })
-              }
+        <Droppable
+          droppableId="all-columns"
+          direction="horizontal"
+          type="column"
+        >
+          {(provided) => (
+            <div
+              className="flex justify-center"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {board.columnOrder.map((columnId, index) => {
+                const column = board.columns[columnId];
+                const tasks = column.taskIds.map(
+                  (taskId) => board.tasks[taskId]
+                );
+                return (
+                  <Column
+                    key={column.id}
+                    column={column}
+                    tasks={tasks}
+                    index={index}
+                    board={board}
+                    setBoard={setBoard}
+                  />
+                );
+              })}
               {provided.placeholder}
             </div>
           )}

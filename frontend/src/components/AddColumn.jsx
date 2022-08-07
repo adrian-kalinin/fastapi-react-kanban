@@ -1,13 +1,13 @@
-import React, {useRef, useState} from 'react';
-
+import React, { useRef, useState } from "react";
 
 const useFocus = () => {
-	const htmlElRef = useRef(null);
-	const setFocus = () => {htmlElRef.current && htmlElRef.current.focus()};
+  const htmlElRef = useRef(null);
+  const setFocus = () => {
+    htmlElRef.current && htmlElRef.current.focus();
+  };
 
-	return [htmlElRef,  setFocus];
-}
-
+  return [htmlElRef, setFocus];
+};
 
 function AddColumn(props) {
   const [showNewColumnButton, setShowNewColumnButton] = useState(true);
@@ -32,27 +32,38 @@ function AddColumn(props) {
     const newColumn = {
       id: newColumnId,
       title: title,
-      taskIds: []
-    }
+      taskIds: [],
+    };
 
     props.setBoard({
       ...props.board,
       columns: {
         ...props.board.columns,
-        [newColumnId]: newColumn
+        [newColumnId]: newColumn,
       },
-      columnOrder: newColumnOrder
+      columnOrder: newColumnOrder,
     });
   }
 
   return (
     <div className="text-sm text-gray-600">
-      {
-        showNewColumnButton ?
-          <button onClick={() => setShowNewColumnButton(false) && setInputFocus()}>New column</button>
-          :
-          <input autoFocus type="text" className="border rounded-md px-2 py-1 outline-none focus:outline-none" value={value} onChange={(event => setValue(event.target.value))} onKeyDown={handleInputComplete} onBlur={() => setShowNewColumnButton(true)} />
-      }
+      {showNewColumnButton ? (
+        <button
+          onClick={() => setShowNewColumnButton(false) && setInputFocus()}
+        >
+          New column
+        </button>
+      ) : (
+        <input
+          autoFocus
+          type="text"
+          className="border rounded-md px-2 py-1 outline-none focus:outline-none"
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+          onKeyDown={handleInputComplete}
+          onBlur={() => setShowNewColumnButton(true)}
+        />
+      )}
     </div>
   );
 }
