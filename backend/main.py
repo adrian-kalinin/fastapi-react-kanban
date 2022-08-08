@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from tortoise import fields
 from tortoise.contrib.fastapi import register_tortoise
 from tortoise.contrib.pydantic import pydantic_model_creator
-from tortoise.models import Model
+
+from app.models import User
 
 app = FastAPI()
 
@@ -33,13 +33,6 @@ class Board(BaseModel):
     columnOrder: list[str]
 
 
-class User(Model):
-    id = fields.IntField(pk=True)
-    username = fields.CharField(max_length=50, unique=True)
-    password = fields.CharField(max_length=200)
-    board = fields.JSONField(default={"tasks": {}, "columns": {}, "columnOrder": []})
-
-
 User_Pydantic = pydantic_model_creator(User, name="User")
 UserIn_Pydantic = pydantic_model_creator(
     User, name="UserIn", exclude_readonly=True, exclude=("board",)
@@ -47,7 +40,7 @@ UserIn_Pydantic = pydantic_model_creator(
 
 
 @app.get("/api/board")
-def board():
+async def board():
     board_data = {
         "tasks": {
             "task-1": {"id": "task-1", "content": "Create video"},
@@ -70,3 +63,14 @@ def board():
     }
 
     return {"board": board_data}
+
+
+@app.on_event("startup")
+def foo():
+    register_tortoise(
+        app,
+        db_url="postgres://postgres:Password1@db:5432/postgres",
+        modules={"models": ["app.models"]},
+        generate_schemas=True,
+        add_exception_handlers=True,
+    )
