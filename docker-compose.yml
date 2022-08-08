@@ -1,4 +1,14 @@
 services:
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: Password1
+    ports:
+      - 5432:5432
+
   server:
     build:
       context: backend
@@ -6,7 +16,9 @@ services:
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
     tty: true
     ports:
-      - "8000:8000"
+      - 8000:8000
+    depends_on:
+      - db
 
   client:
     build:
@@ -14,7 +26,7 @@ services:
       dockerfile: Dockerfile
     command: npm start
     ports:
-      - "3000:3000"
+      - 3000:3000
     depends_on:
       - server
 
@@ -27,3 +39,6 @@ services:
       - client
     ports:
       - 8080:80
+
+volumes:
+  pgdata:
