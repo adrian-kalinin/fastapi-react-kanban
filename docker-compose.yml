@@ -1,0 +1,29 @@
+services:
+  server:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    tty: true
+    ports:
+      - "8000:8000"
+
+  client:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    command: npm start
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+
+  nginx:
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    depends_on:
+      - server
+      - client
+    ports:
+      - 8080:80

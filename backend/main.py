@@ -46,7 +46,7 @@ UserIn_Pydantic = pydantic_model_creator(
 )
 
 
-@app.get("/board")
+@app.get("/api/board")
 def board():
     board_data = {
         "tasks": {

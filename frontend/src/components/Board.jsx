@@ -13,7 +13,7 @@ function Board(props) {
   }, []);
 
   async function fetchBoard() {
-    const response = await fetch("/board");
+    const response = await fetch("/api/board");
     const data = await response.json();
     return data["board"];
   }
