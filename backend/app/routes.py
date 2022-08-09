@@ -1,7 +1,10 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm
+from passlib.hash import bcrypt
 
+from app.authentication import authenticate_user, create_token, get_current_user
 from app.models import User
-from app.schemas import Board
+from app.schemas import Board, UserIn_Pydantic
 
 router = APIRouter()
 
@@ -20,3 +23,24 @@ async def save_board(board: Board):
     await user.save()
 
     return {"message": "success"}
+
+
+@router.post("/users")
+async def create_user(user_in: UserIn_Pydantic):
+    user = User(username=user_in.username, password=bcrypt.hash(user_in.password))
+    await user.save()
+
+    return {"access_token": create_token(user)}
+
+
+@router.post("/token")
+async def generate_token(form_data: OAuth2PasswordRequestForm = Depends()):
+    user = await authenticate_user(form_data.username, form_data.password)
+
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid username or password",
+        )
+
+    return create_token(user)

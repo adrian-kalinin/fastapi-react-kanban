@@ -21,6 +21,7 @@ services:
       POSTGRES_HOST: database
       POSTGRES_PORT: 5432
       POSTGRES_DBNAME: postgres
+      JWT_SECRET: myjwtsecret
     ports:
       - 8000:8000
     depends_on:
