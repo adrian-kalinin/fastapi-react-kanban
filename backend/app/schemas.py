@@ -1,6 +1,7 @@
-import models
 from pydantic import BaseModel
 from tortoise.contrib.pydantic import pydantic_model_creator
+
+from app.models import User
 
 
 class Task(BaseModel):
@@ -28,7 +29,7 @@ class Board(BaseModel):
     columnOrder: list[str]
 
 
-User_Pydantic = pydantic_model_creator(models.User, name="User")
+User_Pydantic = pydantic_model_creator(User, name="User")
 UserIn_Pydantic = pydantic_model_creator(
-    models.User, name="UserIn", exclude_readonly=True, exclude=("board",)
+    User, name="UserIn", exclude_readonly=True, exclude=("board",)
 )
