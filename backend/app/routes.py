@@ -1,29 +1,22 @@
 from fastapi import APIRouter
 
+from app.models import User
+from app.schemas import Board
+
 router = APIRouter()
 
 
 @router.get("/board")
-async def board():
-    board_data = {
-        "tasks": {
-            "task-1": {"id": "task-1", "content": "Create video"},
-            "task-2": {"id": "task-2", "content": "Edit video"},
-            "task-3": {"id": "task-3", "content": "Publish video"},
-        },
-        "columns": {
-            "column-1": {
-                "id": "column-1",
-                "title": "To Do",
-                "taskIds": ["task-2", "task-3"],
-            },
-            "column-2": {
-                "id": "column-2",
-                "title": "Done",
-                "taskIds": ["task-1"],
-            },
-        },
-        "columnOrder": ["column-1", "column-2"],
-    }
+async def get_board():
+    user = await User.get(id=1)
 
-    return {"board": board_data}
+    return {"board": user.board}
+
+
+@router.put("/board")
+async def save_board(board: Board):
+    user = await User.get(id=1)
+    user.board = board.json()
+    await user.save()
+
+    return {"message": "success"}

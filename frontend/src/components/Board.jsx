@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 import Column from "./Column";
@@ -7,15 +7,34 @@ import AddColumn from "./AddColumn";
 function Board(props) {
   const initialData = { tasks: {}, columns: {}, columnOrder: [] };
   const [board, setBoard] = useState(initialData);
+  const isMounted = useRef(false);
 
   useEffect(() => {
     fetchBoard().then((data) => setBoard(data));
   }, []);
 
+  useEffect(() => {
+    if (isMounted.current) {
+      saveBoard().then(() => {});
+    } else {
+      isMounted.current = true;
+    }
+  }, [board]);
+
   async function fetchBoard() {
     const response = await fetch("/api/board");
     const data = await response.json();
     return data["board"];
+  }
+
+  async function saveBoard() {
+    await fetch("/api/board", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(board),
+    });
   }
 
   function onDragEnd(result) {
