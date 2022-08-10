@@ -3,22 +3,22 @@ from fastapi.security import OAuth2PasswordRequestForm
 from passlib.hash import bcrypt
 
 from app.authentication import authenticate_user, create_token, get_current_user
-from app.models import User
-from app.schemas import Board, UserIn_Pydantic
+from app.models import UserModel
+from app.schemas import Board, UserIn
 
 router = APIRouter()
 
 
 @router.get("/board")
 async def get_board():
-    user = await User.get(id=1)
+    user = await UserModel.get(id=1)
 
     return {"board": user.board}
 
 
 @router.put("/board")
 async def save_board(board: Board):
-    user = await User.get(id=1)
+    user = await UserModel.get(id=1)
     user.board = board.json()
     await user.save()
 
@@ -26,8 +26,8 @@ async def save_board(board: Board):
 
 
 @router.post("/users")
-async def create_user(user_in: UserIn_Pydantic):
-    user = User(username=user_in.username, password=bcrypt.hash(user_in.password))
+async def create_user(user_in: UserIn):
+    user = UserModel(username=user_in.username, password=bcrypt.hash(user_in.password))
     await user.save()
 
     return {"access_token": create_token(user)}

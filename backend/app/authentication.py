@@ -5,19 +5,19 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 
 from app.config import settings
-from app.models import User
-from app.schemas import User_Pydantic
+from app.models import UserModel
+from app.schemas import User
 
 oath2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
-async def create_token(user: User) -> str:
-    user_obj = await User_Pydantic.from_tortoise_orm(user)
+async def create_token(user: UserModel) -> str:
+    user_obj = await User.from_tortoise_orm(user)
     return jwt.encode(user_obj.dict(), settings.jwt_secret)
 
 
-async def authenticate_user(username: str, password: str) -> Union[User_Pydantic, bool]:
-    user = await User.get(username=username)
+async def authenticate_user(username: str, password: str) -> Union[User, bool]:
+    user = await UserModel.get(username=username)
 
     if not user or not user.verify_password(password):
         return False

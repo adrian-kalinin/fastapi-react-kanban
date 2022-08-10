@@ -1,7 +1,7 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr, SecretStr
 from tortoise.contrib.pydantic import pydantic_model_creator
 
-from app.models import User
+from app.models import UserModel
 
 
 class Task(BaseModel):
@@ -29,7 +29,9 @@ class Board(BaseModel):
     columnOrder: list[str]
 
 
-User_Pydantic = pydantic_model_creator(User, name="User")
-UserIn_Pydantic = pydantic_model_creator(
-    User, name="UserIn", exclude_readonly=True, exclude=("board",)
-)
+class UserIn(BaseModel):
+    email: EmailStr
+    password: SecretStr
+
+
+User = pydantic_model_creator(UserModel, name="User")
