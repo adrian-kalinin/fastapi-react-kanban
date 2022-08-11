@@ -4,6 +4,7 @@ import Board from "./Board";
 import Navbar from "./Navbar";
 import Register from "./Register";
 import Login from "./Login";
+import Index from "./Index";
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route exact path="/" element={<Board />} />
+          <Route exact path="/" element={<Index />} />
+          <Route exact path="/board" element={<Board />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
         </Routes>
