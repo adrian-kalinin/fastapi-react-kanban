@@ -18,7 +18,7 @@ function Navbar(props) {
             Log in
           </Link>
           <Link
-            to="/register"
+            to="/signup"
             className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base text-white bg-indigo-600 hover:bg-indigo-700"
           >
             Sign up
