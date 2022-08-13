@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Navbar(props) {
+function Navbar() {
   return (
     <nav className="relative bg-white border-b-2 border-gray-100">
       <div className="container mx-auto flex justify-between py-3 px-2">
