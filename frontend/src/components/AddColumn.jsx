@@ -1,18 +1,8 @@
-import React, { useRef, useState } from "react";
-
-const useFocus = () => {
-  const htmlElRef = useRef(null);
-  const setFocus = () => {
-    htmlElRef.current && htmlElRef.current.focus();
-  };
-
-  return [htmlElRef, setFocus];
-};
+import React, { useState } from "react";
 
 function AddColumn(props) {
   const [showNewColumnButton, setShowNewColumnButton] = useState(true);
   const [value, setValue] = useState("");
-  const [inputRef, setInputFocus] = useFocus();
 
   function handleInputComplete(event) {
     if (event.key === "Enter") {
@@ -48,9 +38,7 @@ function AddColumn(props) {
   return (
     <div className="text-sm text-gray-600">
       {showNewColumnButton ? (
-        <button
-          onClick={() => setShowNewColumnButton(false) && setInputFocus()}
-        >
+        <button onClick={() => setShowNewColumnButton(false)}>
           New column
         </button>
       ) : (

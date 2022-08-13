@@ -1,18 +1,8 @@
-import React, { useState, useRef } from "react";
-
-const useFocus = () => {
-  const htmlElRef = useRef(null);
-  const setFocus = () => {
-    htmlElRef.current && htmlElRef.current.focus();
-  };
-
-  return [htmlElRef, setFocus];
-};
+import React, { useState } from "react";
 
 function AddTask(props) {
   const [showNewTaskButton, setShowNewTaskButton] = useState(true);
   const [value, setValue] = useState("");
-  const [inputRef, setInputFocus] = useFocus();
 
   function handleInputComplete(event) {
     if (event.key === "Enter" && event.target.value !== "") {
@@ -56,7 +46,7 @@ function AddTask(props) {
       {showNewTaskButton ? (
         <button
           className="px-2 py-1"
-          onClick={() => setShowNewTaskButton(false) && setInputFocus()}
+          onClick={() => setShowNewTaskButton(false)}
         >
           New task
         </button>
