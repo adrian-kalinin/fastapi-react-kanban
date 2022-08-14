@@ -1,12 +1,23 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-function Register() {
+function Register(props) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const navigate = useNavigate();
 
-  function handleSubmit() {
-    // TODO
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    createUser().then((data) => {
+      const access_token = data["access_token"];
+
+      props.setToken(access_token);
+      localStorage.setItem("token", access_token);
+
+      navigate("/board");
+      console.log(access_token);
+    });
   }
 
   async function createUser() {
@@ -15,7 +26,7 @@ function Register() {
       password: password,
     };
 
-    const response = await fetch("/users", {
+    const response = await fetch("/api/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,12 +45,7 @@ function Register() {
             Create a new account
           </h2>
         </div>
-        <form
-          className="mt-8 space-y-6"
-          action="#"
-          method="POST"
-          onSubmit={handleSubmit}
-        >
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="email-address" className="sr-only">
@@ -84,10 +90,7 @@ function Register() {
             </div>
           </div>
           <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
+            <button className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
               Sign up
             </button>
           </div>

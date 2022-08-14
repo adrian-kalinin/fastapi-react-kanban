@@ -4,7 +4,7 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Column from "./Column";
 import AddColumn from "./AddColumn";
 
-function Board() {
+function Board(props) {
   const initialData = { tasks: {}, columns: {}, columnOrder: [] };
   const [board, setBoard] = useState(initialData);
   const isMounted = useRef(false);
