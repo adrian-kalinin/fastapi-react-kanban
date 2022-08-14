@@ -15,7 +15,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route exact path="/" element={<Index />} />
-          <Route exact path="/board" element={<Board />} />
+          <Route exact path="/board" element={<Board token={token} />} />
           <Route
             exact
             path="/signup"

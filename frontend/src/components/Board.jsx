@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { Navigate } from "react-router-dom";
 
 import Column from "./Column";
 import AddColumn from "./AddColumn";
@@ -22,8 +23,14 @@ function Board(props) {
   }, [board]);
 
   async function fetchBoard() {
-    const response = await fetch("/api/board");
+    const response = await fetch("/api/board", {
+      headers: {
+        Authorization: "Bearer " + props.token,
+      },
+    });
+
     const data = await response.json();
+
     return data["board"];
   }
 
@@ -32,6 +39,7 @@ function Board(props) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + props.token,
       },
       body: JSON.stringify(board),
     });
@@ -114,47 +122,53 @@ function Board(props) {
 
   return (
     <>
-      <div className="container mx-auto flex justify-between my-5 px-2">
-        <div className="flex items-center">
-          <h5 className="text-gray-700 font-semibold">My board</h5>
-        </div>
-        <div className="flex justify-center">
-          <AddColumn board={board} setBoard={setBoard} />
-        </div>
-      </div>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable
-          droppableId="all-columns"
-          direction="horizontal"
-          type="column"
-        >
-          {(provided) => (
-            <div
-              className="flex justify-center"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {board.columnOrder.map((columnId, index) => {
-                const column = board.columns[columnId];
-                const tasks = column.taskIds.map(
-                  (taskId) => board.tasks[taskId]
-                );
-                return (
-                  <Column
-                    key={column.id}
-                    column={column}
-                    tasks={tasks}
-                    index={index}
-                    board={board}
-                    setBoard={setBoard}
-                  />
-                );
-              })}
-              {provided.placeholder}
+      {props.token ? (
+        <>
+          <div className="container mx-auto flex justify-between my-5 px-2">
+            <div className="flex items-center">
+              <h5 className="text-gray-700 font-semibold">My board</h5>
             </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+            <div className="flex justify-center">
+              <AddColumn board={board} setBoard={setBoard} />
+            </div>
+          </div>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable
+              droppableId="all-columns"
+              direction="horizontal"
+              type="column"
+            >
+              {(provided) => (
+                <div
+                  className="flex justify-center"
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  {board.columnOrder.map((columnId, index) => {
+                    const column = board.columns[columnId];
+                    const tasks = column.taskIds.map(
+                      (taskId) => board.tasks[taskId]
+                    );
+                    return (
+                      <Column
+                        key={column.id}
+                        column={column}
+                        tasks={tasks}
+                        index={index}
+                        board={board}
+                        setBoard={setBoard}
+                      />
+                    );
+                  })}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </>
+      ) : (
+        <Navigate to="/login" />
+      )}
     </>
   );
 }
