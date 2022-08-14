@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, SecretStr
+from pydantic import BaseModel, EmailStr
 from tortoise.contrib.pydantic import pydantic_model_creator
 
 from app.models import UserModel
@@ -31,7 +31,7 @@ class Board(BaseModel):
 
 class UserIn(BaseModel):
     email: EmailStr
-    password: SecretStr
+    password: str
 
 
 User = pydantic_model_creator(UserModel, name="User")

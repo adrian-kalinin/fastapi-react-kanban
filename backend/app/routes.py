@@ -27,10 +27,11 @@ async def save_board(board: Board):
 
 @router.post("/users")
 async def create_user(user_in: UserIn):
-    user = UserModel(email=user_in.email, password=bcrypt.hash(user_in.password))
-    await user.save()
+    user = await UserModel.create(
+        email=user_in.email, password=bcrypt.hash(user_in.password)
+    )
 
-    return {"access_token": create_token(user)}
+    return {"access_token": await create_token(user)}
 
 
 @router.post("/token")
