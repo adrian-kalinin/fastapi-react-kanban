@@ -36,4 +36,4 @@ async def get_current_user(token: str = Depends(oath2_scheme)):
             detail="Invalid username or password",
         )
 
-    return await User_Pydantic.from_tortoise_orm(user)
+    return await User.from_tortoise_orm(user)
