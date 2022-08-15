@@ -4,21 +4,21 @@ from passlib.hash import bcrypt
 
 from app.authentication import authenticate_user, create_token, get_current_user
 from app.models import UserModel
-from app.schemas import Board, UserIn
+from app.schemas import Board, User, UserIn
 
 router = APIRouter()
 
 
 @router.get("/board")
-async def get_board():
-    user = await UserModel.get(id=1)
+async def get_board(user: User = Depends(get_current_user)):
+    user = await UserModel.get(id=user.id)
 
     return {"board": user.board}
 
 
 @router.put("/board")
-async def save_board(board: Board):
-    user = await UserModel.get(id=1)
+async def save_board(board: Board, user: User = Depends(get_current_user)):
+    user = await UserModel.get(id=user.id)
     user.board = board.json()
     await user.save()
 

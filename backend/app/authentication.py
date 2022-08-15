@@ -28,7 +28,7 @@ async def authenticate_user(username: str, password: str) -> Union[User, bool]:
 async def get_current_user(token: str = Depends(oath2_scheme)):
     try:
         payload = jwt.decode(token, settings.jwt_secret, algorithms=["HS256"])
-        user = await User.get(id=payload.get("id"))
+        user = await UserModel.get(id=payload.get("id"))
 
     except Exception:
         raise HTTPException(
