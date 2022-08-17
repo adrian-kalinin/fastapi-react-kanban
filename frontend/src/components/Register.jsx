@@ -16,7 +16,6 @@ function Register(props) {
       localStorage.setItem("token", access_token);
 
       navigate("/board");
-      console.log(access_token);
     });
   }
 
