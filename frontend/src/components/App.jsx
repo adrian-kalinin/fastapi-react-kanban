@@ -25,7 +25,7 @@ function App() {
             path="/signup"
             element={<Register setToken={setToken} />}
           />
-          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/login" element={<Login setToken={setToken} />} />
         </Routes>
       </BrowserRouter>
     </div>
