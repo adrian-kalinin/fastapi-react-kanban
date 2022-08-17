@@ -41,7 +41,7 @@ async def generate_token(form_data: OAuth2PasswordRequestForm = Depends()):
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid username or password",
+            detail="Invalid email or password",
         )
 
-    return create_token(user)
+    return {"access_token": await create_token(user)}
