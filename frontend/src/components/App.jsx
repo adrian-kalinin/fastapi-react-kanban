@@ -6,8 +6,12 @@ import Register from "./Register";
 import Login from "./Login";
 import Index from "./Index";
 
+function getToken() {
+  return localStorage.getItem("token");
+}
+
 function App() {
-  const [token, setToken] = useState();
+  const [token, setToken] = useState(() => getToken());
 
   return (
     <div className="App">
