@@ -31,7 +31,8 @@ class Board(BaseModel):
 
 class UserIn(BaseModel):
     email: EmailStr
-    password: str
+    password1: str
+    password2: str
 
 
 User = pydantic_model_creator(UserModel, name="User")

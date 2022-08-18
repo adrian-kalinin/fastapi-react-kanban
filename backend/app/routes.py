@@ -27,8 +27,13 @@ async def save_board(board: Board, user: User = Depends(get_current_user)):
 
 @router.post("/users")
 async def create_user(user_in: UserIn):
+    if not user_in.password1 == user_in.password2:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Passwords don't match"
+        )
+
     user = await UserModel.create(
-        email=user_in.email, password=bcrypt.hash(user_in.password)
+        email=user_in.email, password=bcrypt.hash(user_in.password1)
     )
 
     return {"access_token": await create_token(user)}

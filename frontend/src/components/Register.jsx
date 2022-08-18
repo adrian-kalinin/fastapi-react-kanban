@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Register(props) {
   const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [password1, setPassword1] = useState();
+  const [password2, setPassword2] = useState();
   const navigate = useNavigate();
 
   function handleSubmit(event) {
@@ -22,7 +23,8 @@ function Register(props) {
   async function createUser() {
     const formData = {
       email: email,
-      password: password,
+      password1: password1,
+      password2: password2,
     };
 
     const response = await fetch("/api/users", {
@@ -62,18 +64,31 @@ function Register(props) {
               />
             </div>
             <div>
-              <label htmlFor="password" className="sr-only">
+              <label htmlFor="password1" className="sr-only">
                 Password
               </label>
               <input
-                id="password"
-                name="password"
+                id="password1"
+                name="password1"
                 type="password"
-                autoComplete="current-password"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Password"
+                onChange={(event) => setPassword1(event.target.value)}
+              />
+            </div>
+            <label htmlFor="password2" className="sr-only">
+              Password
+            </label>
+            <div>
+              <input
+                id="password2"
+                name="password2"
+                type="password"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-                onChange={(event) => setPassword(event.target.value)}
+                placeholder="Confirm password"
+                onChange={(event) => setPassword2(event.target.value)}
               />
             </div>
           </div>
