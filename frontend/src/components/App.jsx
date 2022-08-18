@@ -16,7 +16,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
+        <Navbar token={token} />
         <Routes>
           <Route exact path="/" element={<Index />} />
           <Route exact path="/board" element={<Board token={token} />} />
