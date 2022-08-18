@@ -26,7 +26,7 @@ function Navbar(props) {
             </Link>
           </div>
         ) : (
-          <div className="flex items-center">
+          <div className="flex items-center py-3">
             <Link
               to="/board"
               className="whitespace-nowrap text-base text-gray-700 hover:text-gray-900"
