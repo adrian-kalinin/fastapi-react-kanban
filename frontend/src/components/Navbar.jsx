@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Logout from "./Logout";
 
 function Navbar(props) {
   return (
@@ -34,12 +35,7 @@ function Navbar(props) {
               My board
             </Link>
             <span className="h-8 w-px mx-6 bg-gray-200" aria-hidden="true" />
-            <a
-              href="#"
-              className="whitespace-nowrap text-base text-gray-500 hover:text-gray-900"
-            >
-              Log out
-            </a>
+            <Logout setToken={props.setToken} />
           </div>
         )}
       </div>
